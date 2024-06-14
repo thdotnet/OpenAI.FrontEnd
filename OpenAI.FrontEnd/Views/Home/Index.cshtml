@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="main-content">
+    <div id="center">
+        <h2>Answers from OpenAI Service</h2>
+        <div id="answers">
+        </div>
+    </div>
+    <div id="right">
+        <h2>Citations</h2>
+        <div id="citations">
+        </div>
+    </div>
+</div>
+@section PromptSection {
+    <div id="prompt">
+        <textarea id="userPrompt" rows="3" placeholder="Type your prompt here..."></textarea>
+        <button id="btnSubmit">Submit</button>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            var btnSubmit = $("#btnSubmit");
+            btnSubmit.click(function () {
+                var prompt = $("#userPrompt").val();
+                $("#answers").empty();
+                $("#citations").html(" ");
+
+                $.ajax({
+                    url: "https://localhost:7197/home/prompt",
+                    type: "POST",
+                    data: {
+                        prompt: prompt
+                    },
+                    success: function (response) {
+                        $("#answers").empty();
+                        $("#answers").append("<div>" + response.content + "</div>");
+
+                        var citations = JSON.parse(response.citations).citations;
+
+                        citations.forEach(function (citation, index) {
+                            var link = $("<a>")
+                                .attr("href", "#")
+                                .attr("data-citation-content", citation.content)
+                                .text("Source " + (index + 1))
+                                .css("display", "block"); 
+
+                            $("#answers").append(link);
+                        });
+
+                        console.log("Success:", response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", status, error);
+                    }
+                });
+            });
+
+            $("#answers").on("click", "a[data-citation-content]", function (event) {
+                event.preventDefault();
+                var citationContent = $(this).data("citation-content");
+
+                $("#citations").html(citationContent);
+            });
+        });
+    </script>
+}

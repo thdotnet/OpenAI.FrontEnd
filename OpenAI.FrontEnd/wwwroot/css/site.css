@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    flex: 0 0 auto;
+}
+
+.content-container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+#center {
+    flex: 3;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
+}
+
+#right {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+}
+
+#prompt-container {
+    flex: 0 0 auto;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+#prompt {
+    flex: 1;
+    display: flex;
+}
+
+    #prompt textarea {
+        flex: 1;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    #prompt button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+footer {
+    flex: 0 0 auto;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    position: relative !important;
+}
